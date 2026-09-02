@@ -1,0 +1,191 @@
+.lesson-details {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.lesson-header {
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.lesson-header h1 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    color: #015aff;
+    word-wrap: break-word;
+}
+
+.lesson-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 8px;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.meta-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.meta-value {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 3px;
+    color: #333;
+}
+
+.attendance-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+    padding: 15px 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.attendance-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+}
+
+.attendance-stat .count {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.students-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.students-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+}
+
+.students-card h3 {
+    padding: 15px 20px;
+    margin: 0;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.students-card.present h3 {
+    background: #e7004c;
+}
+
+.students-card.absent h3 {
+    background: #e7004c;
+}
+
+.students-list {
+    background: white;
+}
+
+.student-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.2s;
+}
+
+.student-item:hover {
+    background: #f8f9fa;
+}
+
+.student-item:last-child {
+    border-bottom: none;
+}
+
+.student-status-icon {
+    font-size: 18px;
+}
+
+.student-name {
+    font-size: 15px;
+    flex: 1;
+}
+
+.empty-list {
+    padding: 30px 20px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 25px;
+    background: #f8f9fa;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s;
+    border: 1px solid #e9ecef;
+}
+
+.back-link:hover {
+    background: #e9ecef;
+    text-decoration: none;
+    color: #333;
+}
+
+.back-link::before {
+    content: '← ';
+}
+
+@media (max-width: 700px) {
+    .students-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .lesson-meta {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .lesson-header h1 {
+        font-size: 22px;
+    }
+    
+    .attendance-summary {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 450px) {
+    .lesson-meta {
+        grid-template-columns: 1fr;
+    }
+    
+    .lesson-details {
+        padding: 15px;
+    }
+}

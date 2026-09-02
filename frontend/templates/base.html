@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="rgb(132 233 239)">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/small_logo.png') }}">
+    <title>{% block title %}Расписание{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div id="страница">
+        <a href="/">
+            <img id="logo" src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Логотип">
+        </a>
+        
+        {% block content %}{% endblock %}
+    </div>
+    
+    <div id="вверх">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="8 8 34 34">
+            <path d="M 33 25 L 25 17 L 17 25" style="fill: none; stroke: black; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;"></path>
+            <path d="M 25 17 v 17" style="stroke: black; stroke-width: 2; stroke-linecap: round;"></path>
+            <path d="M 25 9 A 16 16 0 0 1 41 25 A 16 16 0 0 1 25 41 A 16 16 0 0 1 9 25 A 16 16 0 0 1 25 9" style="stroke: rgb(200, 200, 200); stroke-width: 2; fill: none;"></path>
+            <path d="M 25 9 A 16 16 0 0 1 41 25 A 16 16 0 0 1 25 41 A 16 16 0 0 1 9 25 A 16 16 0 0 1 25 9" style="stroke: black; stroke-width: 2; stroke-linecap: round; fill: none; stroke-dasharray: 100.531; stroke-dashoffset: 10;" id="доля прокрутки"></path>
+        </svg>
+    </div>
+    <div id="счётчик"></div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Пара: {{ lesson.subject }} | {{ lesson.group_name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lesson_details.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="lesson-details">
+    <div class="lesson-header">
+        <h1>{{ lesson.subject }}</h1>
+        
+        <div class="lesson-meta">
+            <div class="meta-item">
+                <span class="meta-label">Группа</span>
+                <span class="meta-value">{{ lesson.group_name }}</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Номер пары</span>
+                <span class="meta-value">{{ lesson.pair_number }}</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Время</span>
+                <span class="meta-value">{{ lesson.time }}</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Дата</span>
+                <span class="meta-value">{{ lesson.date }}</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">День недели</span>
+                <span class="meta-value">{{ lesson.day_name }}</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Аудитория</span>
+                <span class="meta-value room">{{ lesson.room }}</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Преподаватель</span>
+                <span class="meta-value teacher">{{ lesson.teacher }}</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="students-section">
+        <div class="students-card present">
+            <h3>
+                <span>Присутствуют</span>
+                <span class="badge">{{ present_list|length }}</span>
+            </h3>
+            <div class="students-list">
+                {% if present_list %}
+                    {% for student in present_list %}
+                    <div class="student-item">
+                        <span class="student-name">{{ student }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-list">Нет отмеченных присутствующих</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="students-card absent">
+            <h3>
+                <span>Отсутствуют</span>
+                <span class="badge">{{ absent_list|length }}</span>
+            </h3>
+            <div class="students-list">
+                {% if absent_list %}
+                    {% for student in absent_list %}
+                    <div class="student-item">
+                        <span class="student-name">{{ student }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-list">Нет отмеченных отсутствующих</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <a href="/{{ lesson.group_name }}.html" class="back-link">Вернуться к расписанию группы</a>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/lesson_details.js') }}"></script>
+{% endblock %}

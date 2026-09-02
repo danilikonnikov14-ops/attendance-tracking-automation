@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}{{ group_name }}{% endblock %}
+
+{% block content %}
+<div id="перед-заголовком" style="height: 0;"></div>
+<h1 class="плавающий-заголовок указатель-рука" id="заголовок" onclick="document.getElementById('перед-заголовком').scrollIntoView({behavior: 'smooth'})">
+    Группа {{ group_name }}
+</h1>
+
+{% if schedule and schedule|length > 0 %}
+<div class="расписание">
+    <table class="расписание">
+        <thead>
+            <tr class="заголовки">
+                <th>Пара</th>
+                <th>Время</th>
+                <th>Предмет</th>
+                <th>Преподаватель</th>
+                <th>Посещаемость</th>
+                <th>Ауд.</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in schedule %}
+                {% if day.classes and day.classes|length > 0 %}
+                    <tr class="дата">
+                        <td colspan="6">
+                            <div class="день-недели">{{ day.name }}</div>
+                        </td>
+                    </tr>
+                    {% for class in day.classes %}
+                        <tr class="занятие" data-href="/lesson/{{ group_name }}/{{ day.date }}/{{ class.number }}"
+                            onclick="window.location.href=this.getAttribute('data-href')">
+                            <td style="text-align: center; padding: 8px 4px;">
+                                <div class="пара">
+                                    <a href="/lesson/{{ group_name }}/{{ day.date }}/{{ class.number }}" 
+                                       style="text-decoration: none; color: inherit;">
+                                        {{ class.number }}
+                                    </a>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">{{ class.time }}</td>
+                            <td>{{ class.subject }}</td>
+                            <td>{{ class.teacher }}</td>
+                            <td style="text-align: center;" class="attendance-cell" 
+                                data-group="{{ group_name }}"
+                                data-date="{{ day.date }}"
+                                data-pair="{{ class.number }}">
+                                <span class="attendance-value">—</span>
+                            </td>
+                            <td style="text-align: center;">{{ class.room }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div style="display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 20px; margin-top: 25px;">
+    <a href="/statistics/{{ group_name }}" class="stats-button">Статистика</a>
+</div>
+{% else %}
+<div style="display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 20px;">
+    <p>Нет данных о расписании для группы {{ group_name }}</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/attendance.js') }}"></script>
+{% endblock %}

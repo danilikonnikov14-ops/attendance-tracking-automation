@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+
+{% block title %}Вход в систему{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 60px auto;
+        padding: 40px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .login-container h1 {
+        text-align: center;
+        color: #e7004c;
+        font-size: 28px;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .login-subtitle {
+        text-align: center;
+        color: #888;
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
+    .login-container .logo-login {
+        display: block;
+        max-width: 120px;
+        margin: 0 auto 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 6px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        background: #f8f9fa;
+    }
+
+    .form-group input:focus {
+        border-color: #e7004c;
+        outline: none;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(231, 0, 76, 0.1);
+    }
+
+    .form-group input::placeholder {
+        color: #aaa;
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 14px;
+        background: #e7004c;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .login-btn:hover {
+        background: #c4003f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(231, 0, 76, 0.3);
+    }
+
+    .login-btn:active {
+        transform: translateY(0);
+    }
+
+    .login-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .error-message {
+        background: #fee;
+        color: #c00;
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border-left: 4px solid #c00;
+        display: none;
+        font-size: 14px;
+    }
+
+    .error-message.show {
+        display: block;
+    }
+
+    .login-footer {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 13px;
+        color: #999;
+    }
+
+    .login-footer a {
+        color: #e7004c;
+        text-decoration: none;
+    }
+
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255,255,255,0.3);
+        border-top: 3px solid white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .btn-text {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-hint {
+        background: #f0f7ff;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        border: 1px solid #d6e4ff;
+    }
+
+    .login-hint p {
+        margin: 4px 0;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .login-hint strong {
+        color: #e7004c;
+        font-weight: 600;
+    }
+
+    .login-hint .hint-label {
+        font-size: 12px;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    /* Адаптация под мобильные */
+    @media (max-width: 500px) {
+        .login-container {
+            margin: 30px 15px;
+            padding: 25px 20px;
+        }
+
+        .login-container h1 {
+            font-size: 24px;
+        }
+
+        .form-group input {
+            padding: 10px 14px;
+            font-size: 15px;
+        }
+
+        .login-btn {
+            padding: 12px;
+            font-size: 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+
+    <h1>Вход в систему</h1>
+    <p class="login-subtitle">Face Attendance — распознавание лиц</p>
+
+    <div id="errorMessage" class="error-message"></div>
+
+    <form method="POST" action="/login" id="loginForm">
+        <div class="form-group">
+            <label for="username">Логин</label>
+            <input
+                type="text"
+                id="username"
+                name="login"
+                placeholder="Введите логин"
+                autocomplete="username"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Введите пароль"
+                autocomplete="current-password"
+                required
+            >
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+            <span class="btn-text" id="btnText">Войти</span>
+        </button>
+    </form>
+
+    <div class="login-footer">
+        Система учёта посещаемости<br>
+        <span style="font-size: 12px; color: #ccc;">Версия 1.0.0</span>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const btnText = document.getElementById('btnText');
+    const errorMessage = document.getElementById('errorMessage');
+
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.classList.add('show');
+    }
+
+    function hideError() {
+        errorMessage.classList.remove('show');
+    }
+
+    function setLoading(isLoading) {
+        if (isLoading) {
+            loginBtn.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span> Вход...';
+        } else {
+            loginBtn.disabled = false;
+            btnText.textContent = 'Войти';
+        }
+    }
+    usernameInput.addEventListener('input', hideError);
+    passwordInput.addEventListener('input', hideError);
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!username || !password) {
+            showError('Пожалуйста, заполните все поля');
+            return;
+        }
+
+        hideError();
+        setLoading(true);
+
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'login': username,
+                    'password': password
+                })
+            });
+
+            if (response.redirected) {
+                window.location.href = response.url;
+                return;
+            }
+
+            const text = await response.text();
+            
+            if (text.includes('error-message')) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+                const errorEl = doc.querySelector('.error-message');
+                if (errorEl && errorEl.textContent.trim()) {
+                    showError(errorEl.textContent.trim());
+                } else {
+                    showError('Неверный логин или пароль');
+                }
+                setLoading(false);
+                passwordInput.value = '';
+                passwordInput.focus();
+                return;
+            }
+
+            if (text.includes('groups') || text.includes('расписание')) {
+                window.location.href = '/';
+            } else {
+                showError('Ошибка входа. Попробуйте позже.');
+                setLoading(false);
+            }
+
+        } catch (error) {
+            console.error('Ошибка:', error);
+            showError('Ошибка соединения с сервером');
+            setLoading(false);
+        }
+    });
+
+    passwordInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            form.dispatchEvent(new Event('submit'));
+        }
+    });
+
+    usernameInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            passwordInput.focus();
+        }
+    });
+});
+</script>
+{% endblock %}

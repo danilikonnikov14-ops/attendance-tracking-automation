@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Группы{% endblock %}
+
+{% block content %}
+    <h1 id="заголовок">Группы</h1>
+    {% if user and user.role == 'admin' %}
+        <a href="/sdfg23j4h5k6j7h8g9f0d1s2a3d4f5g612" class="admin-btn">Админ-панель</a>
+    {% endif %}
+    <div class="колонки-группы">
+        {% for group in groups %}
+            <p><a href="{{ group }}.html#заголовок">{{ group }}</a></p>
+        {% endfor %}
+    </div>
+{% endblock %}
