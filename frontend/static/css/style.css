@@ -233,6 +233,7 @@ tr.не-текущая-пара { color: black; }
     opacity: 0;
     transition: opacity 0.2s ease;
 }
+
 #заголовок:hover > img { opacity: 1; }
 
 .вертикальный-текст {
